@@ -29,7 +29,7 @@
 steps:
   -
     name: Checkout
-    uses: actions/checkout@v2
+    uses: actions/checkout@6fbf6d4271a67721a55f4d3616e60f1dfea39648
   -
     name: Build and push Docker images
     uses: docker/build-push-action@v1
@@ -48,7 +48,7 @@ steps:
 steps:
   -
     name: Checkout
-    uses: actions/checkout@v2
+    uses: actions/checkout@6fbf6d4271a67721a55f4d3616e60f1dfea39648
   -
     name: Set up Docker Buildx
     uses: docker/setup-buildx-action@v1
@@ -80,7 +80,7 @@ steps:
 steps:
   -
     name: Checkout
-    uses: actions/checkout@v2
+    uses: actions/checkout@6fbf6d4271a67721a55f4d3616e60f1dfea39648
   -
     name: Build and push Docker images
     uses: docker/build-push-action@v1
@@ -99,7 +99,7 @@ steps:
 steps:
   -
     name: Checkout
-    uses: actions/checkout@v2
+    uses: actions/checkout@6fbf6d4271a67721a55f4d3616e60f1dfea39648
   -
     name: Docker meta
     id: meta
