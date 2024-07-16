@@ -1,12 +1,15 @@
 name: test
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
       - 'master'
+      - 'releases/v*'
   pull_request:
-    branches:
-      - 'master'
 
 jobs:
   test:
@@ -14,19 +17,15 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Validate
-        uses: docker/bake-action@v1
-        with:
-          targets: validate
+        uses: actions/checkout@v4
       -
         name: Test
-        uses: docker/bake-action@v1
+        uses: docker/bake-action@v5
         with:
           targets: test
       -
         name: Upload coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
           file: ./coverage/clover.xml
+          token: ${{ secrets.CODECOV_TOKEN }}

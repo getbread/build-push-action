@@ -13,8 +13,17 @@ inputs:
   allow:
     description: "List of extra privileged entitlement (e.g., network.host,security.insecure)"
     required: false
+  annotations:
+    description: "List of annotation to set to the image"
+    required: false
+  attests:
+    description: "List of attestation parameters (e.g., type=sbom,generator=image)"
+    required: false
   build-args:
     description: "List of build-time variables"
+    required: false
+  build-contexts:
+    description: "List of additional build contexts (e.g., name=path)"
     required: false
   builder:
     description: "Builder instance"
@@ -48,22 +57,34 @@ inputs:
     description: "Do not use cache when building the image"
     required: false
     default: 'false'
+  no-cache-filters:
+    description: "Do not cache specified stages"
+    required: false
   outputs:
     description: "List of output destinations (format: type=local,dest=path)"
     required: false
   platforms:
     description: "List of target platforms for build"
     required: false
+  provenance:
+    description: "Generate provenance attestation for the build (shorthand for --attest=type=provenance)"
+    required: false
   pull:
-    description: "Always attempt to pull a newer version of the image"
+    description: "Always attempt to pull all referenced images"
     required: false
     default: 'false'
   push:
     description: "Push is a shorthand for --output=type=registry"
     required: false
     default: 'false'
+  sbom:
+    description: "Generate SBOM attestation for the build (shorthand for --attest=type=sbom)"
+    required: false
   secrets:
     description: "List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)"
+    required: false
+  secret-envs:
+    description: "List of secret env vars to expose to the build (e.g., key=envname, MY_SECRET=MY_ENV_VAR)"
     required: false
   secret-files:
     description: "List of secret files to expose to the build (e.g., key=filename, MY_SECRET=./secret.txt)"
@@ -89,12 +110,14 @@ inputs:
     required: false
 
 outputs:
+  imageid:
+    description: 'Image ID'
   digest:
-    description: 'Image content-addressable identifier also called a digest'
+    description: 'Image digest'
   metadata:
     description: 'Build result metadata'
 
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
   post: 'dist/index.js'
